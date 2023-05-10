@@ -1,0 +1,116 @@
+Microsoft Windows [Version 10.0.22621.1555]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\ssye0>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 66
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use school;
+Database changed
+MariaDB [school]> SELECT COUNT(*) FROM student WHERE woonplaats = "Lelystad";
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.005 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam, MAX(geboortedatum) FROM student;
++-------------+----------------+------------+--------------------+
+| voorletters | tussenvoegsels | achternaam | MAX(geboortedatum) |
++-------------+----------------+------------+--------------------+
+| pp          | null           | pietersen  | 1998-06-06         |
++-------------+----------------+------------+--------------------+
+1 row in set (0.001 sec)
+
+MariaDB [school]> SELECT SUM(betaald) FROM student;
++--------------+
+| SUM(betaald) |
++--------------+
+|      1600.00 |
++--------------+
+1 row in set (0.003 sec)
+
+MariaDB [school]> SELECT AVG(betaald) FROM student WHERE schoolgeld = 500.00;
++--------------+
+| AVG(betaald) |
++--------------+
+|   325.000000 |
++--------------+
+1 row in set (0.002 sec)
+
+MariaDB [school]> SELECT geslacht, COUNT(*) FROM student GROUP BY geslacht;
++----------+----------+
+| geslacht | COUNT(*) |
++----------+----------+
+| m        |        4 |
+| n        |        1 |
+| v        |        1 |
++----------+----------+
+3 rows in set (0.003 sec)
+
+MariaDB [school]> SELECT geslacht, COUNT(*) FROM student WHERE woonplaats = "Lelystad" GROUP BY geslacht;
++----------+----------+
+| geslacht | COUNT(*) |
++----------+----------+
+| m        |        1 |
+| v        |        1 |
++----------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [school]> SELECT tussenvoegsels, COUNT(*) FROM student GROUP BY tussenvoegsels;
++----------------+----------+
+| tussenvoegsels | COUNT(*) |
++----------------+----------+
+| de             |        2 |
+| null           |        3 |
+| van der        |        1 |
++----------------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT woonplaats, COUNT(*) FROM student GROUP BY woonplaats HAVING COUNT(*) > 1;
++------------+----------+
+| woonplaats | COUNT(*) |
++------------+----------+
+| almere     |        3 |
+| lelystad   |        2 |
++------------+----------+
+2 rows in set (0.002 sec)
+
+MariaDB [school]> SELECT woonplaats, SUM(schoolgeld - betaald) FROM student GROUP BY woonplaats;
++------------+---------------------------+
+| woonplaats | SUM(schoolgeld - betaald) |
++------------+---------------------------+
+| almere     |                      0.00 |
+| lelystad   |                    600.00 |
+| zeewolde   |                    200.00 |
++------------+---------------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [school]>
+MariaDB [school]> SELECT woonplaats, SUM(schoolgeld - betaald) FROM student WHERE schoolgeld - betaald > 0.00 GROUP BY woonplaats;
++------------+---------------------------+
+| woonplaats | SUM(schoolgeld - betaald) |
++------------+---------------------------+
+| lelystad   |                    600.00 |
+| zeewolde   |                    200.00 |
++------------+---------------------------+
+2 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT woonplaats, SUM(schoolgeld - betaald), geslacht, SUM(schoolgeld - betaald) FROM student WHERE schoolgeld - betaald > 0.00 GROUP BY woonplaats, geslacht;
++------------+---------------------------+----------+---------------------------+
+| woonplaats | SUM(schoolgeld - betaald) | geslacht | SUM(schoolgeld - betaald) |
++------------+---------------------------+----------+---------------------------+
+| lelystad   |                    500.00 | m        |                    500.00 |
+| lelystad   |                    100.00 | v        |                    100.00 |
+| zeewolde   |                    200.00 | n        |                    200.00 |
++------------+---------------------------+----------+---------------------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]>
