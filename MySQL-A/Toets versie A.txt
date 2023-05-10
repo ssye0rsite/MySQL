@@ -1,0 +1,60 @@
+SELECT Gender, COUNT(*) AS TotalCount
+FROM Students
+WHERE City = 'Almere'
+GROUP BY Gender;
+
+
+
+SELECT COUNT(*) AS TotalCount
+FROM Students
+WHERE Gender = 'M' AND City = 'Almere';
+
+
+SELECT Roepnaam, Tussenvoegsel, Achternaam
+FROM Students
+WHERE TelefoonnummerType = 'mobiel';
+
+
+SELECT Roepnaam
+FROM Students
+WHERE LENGTH(Roepnaam) < 5;
+
+
+SELECT 1024 * 512 AS Result;
+
+
+UPDATE Students
+SET Telefoonnummer = '06-1256890'
+WHERE Naam = 'Robert Robertsen';
+
+
+SELECT Roepnaam, Tussenvoegsel, Achternaam
+FROM Students
+WHERE Geboortedatum < '1998-01-01';
+
+
+SELECT Roepnaam, Tussenvoegsel, Achternaam
+FROM Students
+WHERE Geslacht = 'Vrouw';
+
+
+SELECT SUM(BetaaldBedrag) AS TotaleBetaling
+FROM Students
+WHERE Woonplaats = 'Lelystad';
+
+
+SELECT SUM(VerschuldigdBedrag) AS TotaalVerschuldigd
+FROM Students;
+
+
+SELECT Roepnaam, Tussenvoegsel, Achternaam
+FROM Students
+WHERE Uitschrijfdatum IS NULL;
+
+
+UPDATE Students
+SET Uitschrijfdatum = CURDATE()
+WHERE Studentnummer = 7777;
+
+
+
