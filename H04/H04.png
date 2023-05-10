@@ -1,0 +1,106 @@
+Microsoft Windows [Version 10.0.22621.1555]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\ssye0>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 64
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use school;
+Database changed
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE geboortedatum BETWEEN "1996-01-01" AND "1997-01-01";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| cb          | de             | bruin      |
++-------------+----------------+------------+
+1 row in set (0.004 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE achternaam LIKE "%n";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| jj          | null           | jansen     |
+| ww          | null           | willensen  |
+| cb          | de             | bruin      |
++-------------+----------------+------------+
+4 rows in set (0.004 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE achternaam LIKE "%i%";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| ww          | null           | willensen  |
+| cb          | de             | bruin      |
++-------------+----------------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE telefoon;
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| jj          | null           | jansen     |
+| cb          | de             | bruin      |
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+4 rows in set, 2 warnings (0.002 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE achternaam LIKE "_i%";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| ww          | null           | willensen  |
++-------------+----------------+------------+
+2 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE woonplaats LIKE "A%";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| jj          | null           | jansen     |
+| ww          | null           | willensen  |
++-------------+----------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE achternaam LIKE "______";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| jj          | null           | jansen     |
++-------------+----------------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE achternaam LIKE "______%";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| jj          | null           | jansen     |
+| ww          | null           | willensen  |
++-------------+----------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE achternaam NOT LIKE "______%";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| bt          | van der        | tol        |
+| cb          | de             | bruin      |
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE telefoon IS NULL;
+Empty set (0.001 sec)
+
+MariaDB [school]>
