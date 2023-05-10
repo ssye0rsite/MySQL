@@ -1,0 +1,127 @@
+Microsoft Windows [Version 10.0.22621.1555]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\ssye0>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 63
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use school;
+Database changed
+MariaDB [school]> show tables;
++------------------+
+| Tables_in_school |
++------------------+
+| student          |
++------------------+
+1 row in set (0.001 sec)
+
+MariaDB [school]> SELECT voorletters, achternaam, adres, postcode, woonplaats FROM student;
++-------------+------------+-----------------+----------+------------+
+| voorletters | achternaam | adres           | postcode | woonplaats |
++-------------+------------+-----------------+----------+------------+
+| pp          | pietersen  | pietstraat 2    | 1111pp   | almere     |
+| jj          | jansen     | janstraat 34    | 2222jj   | almere     |
+| ww          | willensen  | willemstraat 45 | 3333ww   | almere     |
+| bt          | tol        | tolweg 10       | 4444we   | lelystad   |
+| cb          | bruin      | almerestraat 10 | 1553cw   | zeewolde   |
+| ah          | hoed       | hoedenstraat 12 | 1563lw   | lelystad   |
++-------------+------------+-----------------+----------+------------+
+6 rows in set (0.001 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE woonplaats = "Lelystad";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| bt          | van der        | tol        |
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+2 rows in set (0.005 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE woonplaats != "Lelystad";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| jj          | null           | jansen     |
+| ww          | null           | willensen  |
+| cb          | de             | bruin      |
++-------------+----------------+------------+
+4 rows in set (0.003 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE geslacht = "V";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE geslacht = "V" "null";
+Empty set (0.001 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE geslacht = "V";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE geslacht IS NULL;
+Empty set (0.003 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE geslacht IS N;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'N' at line 1
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE woonplaats = "Lelystad" AND geslacht = "V";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+1 row in set (0.003 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam FROM student WHERE woonplaats = "Almere" OR woonplaats= "Lelystad";
++-------------+----------------+------------+
+| voorletters | tussenvoegsels | achternaam |
++-------------+----------------+------------+
+| pp          | null           | pietersen  |
+| jj          | null           | jansen     |
+| ww          | null           | willensen  |
+| bt          | van der        | tol        |
+| ah          | de             | hoed       |
++-------------+----------------+------------+
+5 rows in set (0.003 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam, woonplaats FROM student ORDER BY woonplaats ASC;
++-------------+----------------+------------+------------+
+| voorletters | tussenvoegsels | achternaam | woonplaats |
++-------------+----------------+------------+------------+
+| pp          | null           | pietersen  | almere     |
+| jj          | null           | jansen     | almere     |
+| ww          | null           | willensen  | almere     |
+| bt          | van der        | tol        | lelystad   |
+| ah          | de             | hoed       | lelystad   |
+| cb          | de             | bruin      | zeewolde   |
++-------------+----------------+------------+------------+
+6 rows in set (0.003 sec)
+
+MariaDB [school]> SELECT voorletters, tussenvoegsels, achternaam, woonplaats FROM student ORDER BY woonplaats DESC;
++-------------+----------------+------------+------------+
+| voorletters | tussenvoegsels | achternaam | woonplaats |
++-------------+----------------+------------+------------+
+| cb          | de             | bruin      | zeewolde   |
+| bt          | van der        | tol        | lelystad   |
+| ah          | de             | hoed       | lelystad   |
+| pp          | null           | pietersen  | almere     |
+| jj          | null           | jansen     | almere     |
+| ww          | null           | willensen  | almere     |
++-------------+----------------+------------+------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]>
