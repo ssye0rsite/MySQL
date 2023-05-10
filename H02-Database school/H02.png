@@ -1,0 +1,66 @@
+Microsoft Windows [Version 10.0.22621.1555]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\ssye0>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 62
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use school;
+Database changed
+MariaDB [school]> CREATE TABLE student (
+    -> studentnr varchar(5),
+    -> roepnaam varchar(10),
+    -> voorletters varchar(10),
+    -> tussenvoegsels varchar(8),
+    -> achternaam varchar(25),
+    -> adres varchar(25),
+    -> postcode varchar(7),
+    -> woonplaats varchar(25),
+    -> geslacht char(1),
+    -> telefoon varchar(11),
+    -> geboortedatum date,
+    -> uitgeschreven date,
+    -> schoolgeld decimal(6,2),
+    -> betaald decimal(6,2),
+    -> primary key(studentnr)
+    -> ) engine = innodb;
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [school]> insert into student values ('1111', 'piet', 'pp', 'null', 'pietersen', 'pietstraat 2', '1111pp', 'almere', 'm', '231234567', '1995-01-20', 'null', '500', '500');
+Query OK, 1 row affected, 1 warning (0.004 sec)
+
+MariaDB [school]> insert into student values ('2222', 'jan', 'jj', 'null', 'jansen', 'janstraat 34', '2222jj', 'almere', 'm','0369876543', '1995-11-20', 'null', '500','500');
+Query OK, 1 row affected, 1 warning (0.005 sec)
+
+MariaDB [school]> insert into student values ('3333', 'willem','ww','null','willensen','willemstraat 45','3333ww','almere','m', 'null','1998-18-02','null','200','200');
+Query OK, 1 row affected, 2 warnings (0.004 sec)
+
+MariaDB [school]> insert into student values ('4444', 'berend','bt', 'van der','tol','tolweg 10', '4444we','lelystad', 'm', 'null','1994-04-03', 'null','500', '0');
+Query OK, 1 row affected, 1 warning (0.003 sec)
+
+MariaDB [school]> insert into student values ('5555','cynthia', 'cb','de','bruin','almerestraat 10','1553cw','zeewolde','null','0665789431', '1996-05-05','null', '500','300');
+Query OK, 1 row affected, 2 warnings (0.004 sec)
+
+MariaDB [school]> insert into student values ('6666','angelique','ah','de','hoed','hoedenstraat 12','1563lw','lelystad','v', '0320654378','1998-06-06','null','200','100');
+Query OK, 1 row affected, 1 warning (0.005 sec)
+
+MariaDB [school]> select * from student;
++-----------+-----------+-------------+----------------+------------+-----------------+----------+------------+----------+------------+---------------+---------------+------------+---------+
+| studentnr | roepnaam  | voorletters | tussenvoegsels | achternaam | adres           | postcode | woonplaats | geslacht | telefoon   | geboortedatum | uitgeschreven | schoolgeld | betaald |
++-----------+-----------+-------------+----------------+------------+-----------------+----------+------------+----------+------------+---------------+---------------+------------+---------+
+| 1111      | piet      | pp          | null           | pietersen  | pietstraat 2    | 1111pp   | almere     | m        | 231234567  | 1995-01-20    | 0000-00-00    |     500.00 |  500.00 |
+| 2222      | jan       | jj          | null           | jansen     | janstraat 34    | 2222jj   | almere     | m        | 0369876543 | 1995-11-20    | 0000-00-00    |     500.00 |  500.00 |
+| 3333      | willem    | ww          | null           | willensen  | willemstraat 45 | 3333ww   | almere     | m        | null       | 0000-00-00    | 0000-00-00    |     200.00 |  200.00 |
+| 4444      | berend    | bt          | van der        | tol        | tolweg 10       | 4444we   | lelystad   | m        | null       | 1994-04-03    | 0000-00-00    |     500.00 |    0.00 |
+| 5555      | cynthia   | cb          | de             | bruin      | almerestraat 10 | 1553cw   | zeewolde   | n        | 0665789431 | 1996-05-05    | 0000-00-00    |     500.00 |  300.00 |
+| 6666      | angelique | ah          | de             | hoed       | hoedenstraat 12 | 1563lw   | lelystad   | v        | 0320654378 | 1998-06-06    | 0000-00-00    |     200.00 |  100.00 |
++-----------+-----------+-------------+----------------+------------+-----------------+----------+------------+----------+------------+---------------+---------------+------------+---------+
+6 rows in set (0.001 sec)
+
+MariaDB [school]>
