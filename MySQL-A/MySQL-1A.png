@@ -1,0 +1,145 @@
+Microsoft Windows [Version 10.0.22621.1555]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\ssye0>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 77
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use school
+Database changed
+MariaDB [school]> INSERT INTO Student (studentnr, roepnaam, achternaam, geboortedatum, adres, postcode, woonplaats, telefoon, schoolgeld)
+    -> VALUES (7777, 'Robert', 'Robertsen', '1997-02-02', 'Mozartstraat 10', '1313 DE', 'Almere', '06-9876540', 500.00);
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [school]> SELECT COUNT(*) AS aantal_mannelijke_studenten
+    -> FROM Student
+    -> WHERE woonplaats = 'Almere' AND geslacht = 'M';
++-----------------------------+
+| aantal_mannelijke_studenten |
++-----------------------------+
+|                           3 |
++-----------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [school]> SELECT SUM(schoolgeld) AS totaal_betaald_lelystad
+    -> FROM Student
+    -> WHERE woonplaats = 'Lelystad';
++-------------------------+
+| totaal_betaald_lelystad |
++-------------------------+
+|                  700.00 |
++-------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [school]> SELECT roepnaam
+    -> FROM Student
+    -> WHERE LENGTH(roepnaam) < 5;
++----------+
+| roepnaam |
++----------+
+| piet     |
+| jan      |
++----------+
+2 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT SUM(schoolgeld - betaald) AS totaal_verschuldigd_schoolgeld
+    -> FROM student;
++--------------------------------+
+| totaal_verschuldigd_schoolgeld |
++--------------------------------+
+|                         800.00 |
++--------------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> UPDATE student
+    -> SET telefoon = '06-1256890'
+    -> WHERE roepnaam = 'Robert' AND achternaam = 'Robertsen';
+Query OK, 1 row affected (0.005 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [school]> SELECT 1024 * 512 AS resultaat;
++-----------+
+| resultaat |
++-----------+
+|    524288 |
++-----------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> SELECT roepnaam, tussenvoegsels, achternaam
+    -> FROM Student
+    -> WHERE uitgeschreven = 0;
++-----------+----------------+------------+
+| roepnaam  | tussenvoegsels | achternaam |
++-----------+----------------+------------+
+| piet      | null           | pietersen  |
+| jan       | null           | jansen     |
+| willem    | null           | willensen  |
+| berend    | van der        | tol        |
+| cynthia   | de             | bruin      |
+| angelique | de             | hoed       |
++-----------+----------------+------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT geslacht, COUNT(*) AS aantal_studenten
+    -> FROM Student
+    -> WHERE woonplaats = 'Almere'
+    -> GROUP BY geslacht;
++----------+------------------+
+| geslacht | aantal_studenten |
++----------+------------------+
+| NULL     |                1 |
+| m        |                3 |
++----------+------------------+
+2 rows in set (0.001 sec)
+
+MariaDB [school]> SELECT roepnaam, tussenvoegsels, achternaam
+    -> FROM Student
+    -> WHERE telefoon LIKE '06-%' OR telefoon LIKE '+31 6-%';
++----------+----------------+------------+
+| roepnaam | tussenvoegsels | achternaam |
++----------+----------------+------------+
+| Robert   | NULL           | Robertsen  |
++----------+----------------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> SELECT roepnaam, tussenvoegsels, achternaam
+    -> FROM Student
+    -> WHERE geboortedatum < '1998-01-01';
++----------+----------------+------------+
+| roepnaam | tussenvoegsels | achternaam |
++----------+----------------+------------+
+| piet     | null           | pietersen  |
+| jan      | null           | jansen     |
+| willem   | null           | willensen  |
+| berend   | van der        | tol        |
+| cynthia  | de             | bruin      |
+| Robert   | NULL           | Robertsen  |
++----------+----------------+------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> SELECT roepnaam, tussenvoegsels, achternaam
+    -> FROM Student
+    -> WHERE geslacht = 'v';
++-----------+----------------+------------+
+| roepnaam  | tussenvoegsels | achternaam |
++-----------+----------------+------------+
+| angelique | de             | hoed       |
++-----------+----------------+------------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> UPDATE Student
+    -> SET uitgeschreven = 1 = CURDATE()
+    -> WHERE roepnaam = 'Robert' AND achternaam = 'Robertsen';
+Query OK, 1 row affected, 2 warnings (0.005 sec)
+Rows matched: 1  Changed: 1  Warnings: 2
+
+MariaDB [school]> exit;
+Bye
+
+C:\Users\ssye0>
