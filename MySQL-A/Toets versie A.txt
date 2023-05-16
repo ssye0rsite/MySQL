@@ -1,60 +1,64 @@
-SELECT Gender, COUNT(*) AS TotalCount
-FROM Students
-WHERE City = 'Almere'
-GROUP BY Gender;
+INSERT INTO Student (studentnr, roepnaam, achternaam, geboortedatum, adres, postcode, woonplaats, telefoon, schoolgeld)
+VALUES (7777, 'Robert', 'Robertsen', '1997-02-02', 'Mozartstraat 10', '1313 DE', 'Almere', '06-9876540', 500.00);
+
+SELECT COUNT(*) AS aantal_mannelijke_studenten
+FROM Student
+WHERE woonplaats = 'Almere' AND geslacht = 'M';
 
 
-
-SELECT COUNT(*) AS TotalCount
-FROM Students
-WHERE Gender = 'M' AND City = 'Almere';
-
-
-SELECT Roepnaam, Tussenvoegsel, Achternaam
-FROM Students
-WHERE TelefoonnummerType = 'mobiel';
+SELECT SUM(schoolgeld) AS totaal_betaald_lelystad
+FROM Student
+WHERE woonplaats = 'Lelystad';
 
 
-SELECT Roepnaam
-FROM Students
-WHERE LENGTH(Roepnaam) < 5;
+SELECT roepnaam
+FROM Student
+WHERE LENGTH(roepnaam) < 5;
 
 
-SELECT 1024 * 512 AS Result;
+SELECT SUM(schoolgeld - betaald) AS totaal_verschuldigd_schoolgeld
+FROM student;
 
 
-UPDATE Students
-SET Telefoonnummer = '06-1256890'
-WHERE Naam = 'Robert Robertsen';
+UPDATE student
+SET telefoon = '06-1256890'
+WHERE roepnaam = 'Robert' AND achternaam = 'Robertsen';
 
 
-SELECT Roepnaam, Tussenvoegsel, Achternaam
-FROM Students
-WHERE Geboortedatum < '1998-01-01';
+SELECT 1024 * 512 AS resultaat;
 
 
-SELECT Roepnaam, Tussenvoegsel, Achternaam
-FROM Students
-WHERE Geslacht = 'Vrouw';
+SELECT roepnaam, tussenvoegsels, achternaam
+FROM Student
+WHERE uitgeschreven = 0;
 
 
-SELECT SUM(BetaaldBedrag) AS TotaleBetaling
-FROM Students
-WHERE Woonplaats = 'Lelystad';
+SELECT geslacht, COUNT(*) AS aantal_studenten
+FROM Student
+WHERE woonplaats = 'Almere'
+GROUP BY geslacht;
 
 
-SELECT SUM(VerschuldigdBedrag) AS TotaalVerschuldigd
-FROM Students;
+SELECT roepnaam, tussenvoegsels, achternaam
+FROM Student
+WHERE telefoon LIKE '06-%' OR telefoon LIKE '+31 6-%';
 
 
-SELECT Roepnaam, Tussenvoegsel, Achternaam
-FROM Students
-WHERE Uitschrijfdatum IS NULL;
+SELECT roepnaam, tussenvoegsels, achternaam
+FROM Student
+WHERE geboortedatum < '1998-01-01';
 
 
-UPDATE Students
-SET Uitschrijfdatum = CURDATE()
-WHERE Studentnummer = 7777;
+SELECT roepnaam, tussenvoegsels, achternaam
+FROM Student
+WHERE geslacht = 'v';
+
+
+UPDATE Student
+SET uitgeschreven = 1 = CURDATE()
+WHERE roepnaam = 'Robert' AND achternaam = 'Robertsen';
+
+
 
 
 
